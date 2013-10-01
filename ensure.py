@@ -19,7 +19,7 @@ OP_F = {
 def ubuntu_install(package):
     return sh.apt_get("install", package)
 
-def install_package(package, sys_type)
+def install_package(package, sys_type):
     return OP_F.get(sys_type, lambda x:x)(package)
 
 
