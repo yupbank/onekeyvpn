@@ -10,21 +10,30 @@ Created on
 '''
 import sh
 import os
+import sys
 
+
+def ubuntu_install(package):
+    return os.popen('sudo apt-get install %s -y'%package)
 
 OP_F = {
         "Linux": ubuntu_install
         }
 
-def ubuntu_install(package):
-    return sh.apt_get("install", package)
+OP_PACKAGE = {
+        "Linux": ['openswan', 'xl2tpd']
+	}
 
 def install_package(package, sys_type):
-    return OP_F.get(sys_type, lambda x:x)(package)
+    return OP_F[sys_type](package)
 
 
 def main():
-    print sh.uname()
+    os_type = sh.uname().strip()
+    for p in OP_PACKAGE[os_type]:
+        for info in install_package(p, os_type):
+            #sys.stdout.flush()
+	        print info
     #print sh.ifconfig()
 
 if __name__ == '__main__':
