@@ -42,7 +42,9 @@ class MyDaemon(Daemon):
 
 
 def main():
-    da = MyDaemon('/Users/yupbank/projects/onekey_vpn/ha', stdout='/Users/yupbank/projects/onekey_vpn/t', stdout_mode='w')
+    t = os.path.dirname(os.path.abspath(__file__))
+    print t
+    da = MyDaemon('%s/pid'%t, stdout='%s/log'%t, stdout_mode='w')
     print 'start'
     da.start()
 
