@@ -13,7 +13,7 @@ from signal import SIGTERM
 
  
 class Daemon(object):
-    def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+    def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null', stdin_mode='r', stdout_mode='a+', stderr_mode='a+'):
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
@@ -42,9 +42,9 @@ class Daemon(object):
 
         sys.stdout.flush()
         sys.stderr.flush()
-        stdin = file(self.stdin, 'r')
-        stdout = file(self.stdout, 'a+')
-        stderr = file(self.stderr, 'a+', 0)
+        stdin = file(self.stdin, stdin_mode)
+        stdout = file(self.stdout, stdout_mode)
+        stderr = file(self.stderr, stderr_mode, 0)
         os.dup2(stdin.fileno(), sys.stdin.fileno())
         os.dup2(stdout.fileno(), sys.stdout.fileno())
         os.dup2(stderr.fileno(), sys.stderr.fileno())
