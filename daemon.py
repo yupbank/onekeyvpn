@@ -18,6 +18,9 @@ class Daemon(object):
         self.stdout = stdout
         self.stderr = stderr
         self.pidfile = pidfile
+        self.stdin_mode = stdin_mode
+        self.stdout_mode = stdout_mode
+        self.stderr_mode = stderr_mode
 
     def daemonize(self):
         try:
@@ -42,9 +45,9 @@ class Daemon(object):
 
         sys.stdout.flush()
         sys.stderr.flush()
-        stdin = file(self.stdin, stdin_mode)
-        stdout = file(self.stdout, stdout_mode)
-        stderr = file(self.stderr, stderr_mode, 0)
+        stdin = file(self.stdin, self.stdin_mode)
+        stdout = file(self.stdout, self.stdout_mode)
+        stderr = file(self.stderr, self.stderr_mode, 0)
         os.dup2(stdin.fileno(), sys.stdin.fileno())
         os.dup2(stdout.fileno(), sys.stdout.fileno())
         os.dup2(stderr.fileno(), sys.stderr.fileno())
