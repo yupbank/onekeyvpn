@@ -21,7 +21,7 @@ OP_F = {
         }
 
 OP_PACKAGE = {
-        "Linux": ['openswan', 'xl2tpd']
+        "Linux": ['openswan', 'xl2tpd', 'ppp'][::-1]
 	}
 
 def install_package(package, sys_type):
@@ -32,8 +32,8 @@ def main():
     os_type = sh.uname().strip()
     for p in OP_PACKAGE[os_type]:
         for info in install_package(p, os_type):
-            #sys.stdout.flush()
-	        print info
+            sys.stdout.flush()
+	    print info
     #print sh.ifconfig()
 
 if __name__ == '__main__':
